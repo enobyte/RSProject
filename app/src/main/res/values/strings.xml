@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RS Project</string>
+    <string-array name="spinner_level">
+        <item>Penting</item>
+        <item>Sedang</item>
+    </string-array>
+</resources>
