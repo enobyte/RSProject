@@ -84,6 +84,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
+                        android:text="Kategori"
+                        android:textSize="15sp" />
+
+                    <Spinner
+                        android:id="@+id/kategori"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="10dp"
+                        android:entries="@array/spinner_level" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:text="Judul"
                         android:textSize="15sp" />
 
@@ -162,8 +179,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
-                            android:text="-6.1290808" />
+                            android:paddingLeft="10dp" />
 
                     </LinearLayout>
 
@@ -186,8 +202,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
-                            android:text="126.1980128" />
+                            android:paddingLeft="10dp" />
 
                     </LinearLayout>
 

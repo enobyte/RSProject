@@ -1,0 +1,227 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:scaleType="centerCrop">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#12b23e"
+            app:titleEnabled="false"
+            android:fitsSystemWindows="true"
+            app:expandedTitleTextAppearance="@style/CollapsedAppBar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <include layout="@layout/toolbardetail" />
+
+            <ImageView
+                android:id="@+id/img_issue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/no_image"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
+
+            <ImageView
+                android:id="@+id/zoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left|bottom"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_zoom"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/take"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right|top"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/tk_o" />
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/content_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin_webview"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Kategori" />
+
+                    <Spinner
+                        android:id="@+id/kategori"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="10dp"
+                        android:entries="@array/spinner_level" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Judul"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/judul"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="13dp" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Ringkasan"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/ringkasan"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="13dp" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Level"
+                        android:textSize="15sp" />
+
+                    <Spinner
+                        android:id="@+id/level"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="10dp"
+                        android:entries="@array/spinner_level" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Lokasi" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@color/teal_14"
+                        android:orientation="horizontal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_weight="0.82"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_mark" />
+
+                        <TextView
+                            android:id="@+id/lat"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:text="-6.1290808" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.82"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_mark" />
+
+                        <TextView
+                            android:id="@+id/lon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:text="126.1980128" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:src="@drawable/ic_sent"
+        app:backgroundTint="#12b23e"
+        app:layout_anchor="@+id/content_detail"
+        app:layout_anchorGravity="top|end" />
+
+</android.support.design.widget.CoordinatorLayout>

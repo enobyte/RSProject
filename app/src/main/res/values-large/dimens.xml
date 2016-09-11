@@ -11,10 +11,18 @@
     <dimen name="cardview_height">150dp</dimen>
     <dimen name="cardview_textsize">25sp</dimen>
     <dimen name="cardview_textsize_date">15sp</dimen>
-    <dimen name="margin_toplogo">20dp</dimen>
+    <dimen name="margin_toplogo">40dp</dimen>
     <dimen name="inputChat">80dp</dimen>
     <dimen name="margin_bottom_recycle">80dp</dimen>
     <dimen name="height_edit_addissue">90dp</dimen>
     <dimen name="text_addissue">25sp</dimen>
     <dimen name="description_detail">20sp</dimen>
+    <dimen name="text_chat_size">30sp</dimen>
+    <dimen name="padding_text">10dp</dimen>
+    <dimen name="fab_width">90dp</dimen>
+    <dimen name="height_edit_login">80dp</dimen>
+    <dimen name="width_edit_login">400dp</dimen>
+    <dimen name="fab_main">90dp</dimen>
+    <dimen name="fab_margin">40dp</dimen>
+    <dimen name="margin_text_chat">40dp</dimen>
 </resources>

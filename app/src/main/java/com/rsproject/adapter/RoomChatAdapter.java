@@ -40,13 +40,16 @@ public class RoomChatAdapter extends RecyclerView.Adapter<RoomChatAdapter.ChatHo
     public void onBindViewHolder(ChatHolder holder, int position) {
         final ListChatItem item = itemData.get(position);
         holder.leftSMS.setText(item.getContent());
+        holder.dateSMS.setText(item.getDate());
         if (item != null) {
-            if (item.getLevel().equalsIgnoreCase("1")) {
+            if (item.getId_laporan().equalsIgnoreCase("1")) {
+                //holder.dateSMS.setGravity(Gravity.RIGHT);
                 holder.leftSMS.setGravity(Gravity.RIGHT);
                 holder.linerChat.setGravity(Gravity.RIGHT);
                 holder.relativeLayout.setGravity(Gravity.RIGHT);
                 holder.relativeLayout.setBackgroundResource(R.drawable.speech_bubble_out);
             } else {
+                //holder.dateSMS.setGravity(Gravity.LEFT);
                 holder.leftSMS.setGravity(Gravity.LEFT);
                 holder.linerChat.setGravity(Gravity.LEFT);
                 holder.relativeLayout.setGravity(Gravity.LEFT);

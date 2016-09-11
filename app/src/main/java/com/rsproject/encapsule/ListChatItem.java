@@ -7,13 +7,13 @@ public class ListChatItem {
     private String name;
     private String date;
     private String content;
-    private String level;
+    private String id_laporan;
 
-    public ListChatItem(String name, String date, String content, String level) {
+    public ListChatItem(String name, String date, String content, String id_laporan) {
         this.name = name;
         this.date = date;
         this.content = content;
-        this.level = level;
+        this.id_laporan = id_laporan;
     }
 
     public String getName() {
@@ -41,11 +41,11 @@ public class ListChatItem {
         this.content = content;
     }
 
-    public String getLevel() {
-        return level;
+    public String getId_laporan() {
+        return id_laporan;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setId_laporan(String id_laporan) {
+        this.id_laporan = id_laporan;
     }
 }

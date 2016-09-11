@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">RS Project</string>
+    <string name="loading_news">Loading...</string>
     <string-array name="spinner_level">
-        <item>Penting</item>
+        <item>-- Select One --</item>
+        <item>Darurat</item>
         <item>Sedang</item>
     </string-array>
 </resources>

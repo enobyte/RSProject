@@ -1,13 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bglogin"
+        android:background="@color/white"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -21,16 +21,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/all_margin_layout"
+            android:layout_margin="10dp"
             android:layout_weight="0.5"
             android:gravity="center"
             android:orientation="vertical">
 
+
             <EditText
                 android:id="@+id/email_login"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_enter_login"
-                android:layout_marginBottom="@dimen/margin_enter_login"
+                android:layout_width="@dimen/width_edit_login"
+                android:layout_height="@dimen/height_edit_login"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/rounded_edit"
                 android:drawableLeft="@drawable/ic_user"
                 android:drawablePadding="10dp"
                 android:hint="Username"
@@ -38,8 +40,9 @@
 
             <EditText
                 android:id="@+id/pass_login"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_enter_login"
+                android:layout_width="@dimen/width_edit_login"
+                android:layout_height="@dimen/height_edit_login"
+                android:background="@drawable/rounded_edit"
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="10dp"
                 android:hint="Password"
@@ -51,7 +54,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/all_margin_layout"
+            android:layout_margin="10dp"
             android:layout_weight="0.5"
             android:gravity="center"
             android:orientation="vertical">
@@ -59,16 +62,14 @@
 
             <com.rsproject.widget.TextViewPlus
                 android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginBottom="@dimen/margin_bottom_btn_login"
+                android:layout_width="@dimen/width_edit_login"
+                android:layout_height="@dimen/height_edit_login"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_btn"
-                android:text="LOGIN"
-                android:textSize="25sp"
                 android:gravity="center_horizontal|center_vertical"
-                android:textColor="@color/blue_11"
+                android:text="LOGIN"
+                android:textColor="@color/white"
                 app:customFont="fonts/AvenirNext-Bold.ttf" />
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

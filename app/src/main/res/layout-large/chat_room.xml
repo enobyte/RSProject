@@ -43,7 +43,6 @@
             android:layout_height="match_parent"
             android:layout_weight="0.8"
             android:focusable="true"
-            android:scaleType="center"
             android:src="@drawable/ic_sender" />
     </LinearLayout>
 

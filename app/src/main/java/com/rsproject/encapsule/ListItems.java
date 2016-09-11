@@ -8,12 +8,17 @@ public class ListItems {
     private String date;
     private String description;
     private String urlImage;
+    private String judul;
+    private String id;
 
-    public ListItems(String name, String date, String description, String urlImage) {
+
+    public ListItems(String id,String name, String date, String description, String urlImage, String judul) {
+        this.id = id;
         this.name = name;
         this.date = date;
         this.description = description;
         this.urlImage = urlImage;
+        this.judul = judul;
     }
 
     public String getName() {
@@ -48,5 +53,19 @@ public class ListItems {
         this.urlImage = urlImage;
     }
 
+    public String getJudul() {
+        return judul;
+    }
 
+    public void setJudul(String judul) {
+        this.judul = judul;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
