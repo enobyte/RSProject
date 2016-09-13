@@ -279,7 +279,7 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-        alertDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
