@@ -13,7 +13,7 @@
     <dimen name="heigt_edit_addissue">100dp</dimen>
     <dimen name="text_addissue">25sp</dimen>
     <dimen name="text_chat">40sp</dimen>
-    <dimen name="fab_width">110dp</dimen>
+    <dimen name="fab_width">150dp</dimen>
     <dimen name="description_detail">30sp</dimen>
     <dimen name="width_edit_login">600dp</dimen>
     <dimen name="fab_margin_bottom">60dp</dimen>

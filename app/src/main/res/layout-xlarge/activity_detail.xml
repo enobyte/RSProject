@@ -142,12 +142,14 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="120dp"
+        android:layout_width="@dimen/fab_width"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|right|bottom"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin_right"
         android:src="@drawable/ic_command"
+        app:layout_anchor="@+id/content_detail"
+        android:layout_gravity="center_vertical|start"
+        app:layout_anchorGravity="top|end"
         app:backgroundTint="#12b23e"
         app:paddingStart="20dp" />
 </android.support.design.widget.CoordinatorLayout>
