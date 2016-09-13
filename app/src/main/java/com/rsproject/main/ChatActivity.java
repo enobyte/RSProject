@@ -45,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private List<ListChatItem> list = new ArrayList<>();
     private List<ListChatItem> listCurrent = new ArrayList<>();
     private Toolbar toolbar;
-    private String position, urlImage, name, date, description, response, message, judul;
+    private String position, urlImage, name, date, description, response, message, judul, id_laporan;
     private Set<String> set = new HashSet<String>();
     private List<String> listClose = new ArrayList<String>();
     private List<String> listCloseCurrent = new ArrayList<String>();
@@ -77,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
         position = getIntent().getStringExtra("pos");
         judul = getIntent().getStringExtra("title");
         listCloseCurrent = getIntent().getStringArrayListExtra("fab");
+        id_laporan = getIntent().getStringExtra("id_laporan");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(name);
@@ -191,7 +192,7 @@ public class ChatActivity extends AppCompatActivity {
             try {
                 jsonData = new JSONObject();
                 String url = ConnectionManager.URL_GET_RESPONSE;
-                response = ConnectionManager.requestResponse(url, name, "1", ChatActivity.this);
+                response = ConnectionManager.requestResponse(url, name, id_laporan, ChatActivity.this);
                 if (response != null) {
                     jsonObj = new JSONObject(response);
                     jsonArray = jsonObj.getJSONArray("data");

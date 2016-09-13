@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,6 +60,8 @@ public class DetailActivity extends AppCompatActivity {
     private JSONObject jsonData;
     private Boolean isInternetActive = false;
     private ConnectionDetector cd;
+    private CoordinatorLayout coordinatorLayout;
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,10 +90,12 @@ public class DetailActivity extends AppCompatActivity {
                 i.putExtra("urlimage",urlImage);
                 i.putExtra("description",description);
                 i.putExtra("title", judul);
+                i.putExtra("id_laporan", id_laporan);
                 startActivity(i);
                 finish();
             }
         });
+
 
     }
 
@@ -103,6 +109,8 @@ public class DetailActivity extends AppCompatActivity {
         detail_judul = (TextView) findViewById(R.id.detail_judul);
         recyclerView = (RecyclerView) findViewById(R.id.par_coment);
         session = getSharedPreferences("active", Context.MODE_PRIVATE);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinator);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         Set<String> fabActive = session.getStringSet("active", null);
         sessionLogin = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         name = sessionLogin.getString("nama", null);
