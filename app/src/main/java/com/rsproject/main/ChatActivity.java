@@ -98,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void showList() {
         LinearLayoutManager layoutParams = new LinearLayoutManager(ChatActivity.this);
+        layoutParams.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutParams);
         adapter = new RoomChatAdapter(list);
         recyclerView.setAdapter(adapter);

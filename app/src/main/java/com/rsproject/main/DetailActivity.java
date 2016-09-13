@@ -226,7 +226,8 @@ public class DetailActivity extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(response);
                     JSONArray jsonArray = jsonObj.getJSONArray("data");
                     if (jsonArray.length() > 0) {
-                        for (int i = 0; i < 4; i++) {
+                        int m = jsonArray.length() - 5;
+                        for (int i = m; i < jsonArray.length(); i++) {
                             jsonData = jsonArray.getJSONObject(i);
                             String id_respon = jsonData.getString("id_response");
                             String id_laporan = jsonData.getString("id_laporan");
