@@ -114,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            listCurrent.add(new ListChatItem(name, date, textChat, "1"));
+            listCurrent.add(new ListChatItem(name, date, textChat, id_laporan));
             //showList();
         }
 
@@ -123,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
             try {
                 String url = ConnectionManager.URL_SAVE_RESPONSE;
                 response = ConnectionManager.requestSaveResponse(url, name, textChat,
-                        date, "1", ChatActivity.this);
+                        date, id_laporan, ChatActivity.this);
                 jsonObj = new JSONObject(response);
                 if (jsonObj != null) {
                     message = jsonObj.getString("message");
