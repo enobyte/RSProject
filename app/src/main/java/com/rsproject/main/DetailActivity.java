@@ -233,8 +233,14 @@ public class DetailActivity extends AppCompatActivity {
                 if (response != null) {
                     JSONObject jsonObj = new JSONObject(response);
                     JSONArray jsonArray = jsonObj.getJSONArray("data");
+                    int m = 0;
                     if (jsonArray.length() > 0) {
-                        int m = jsonArray.length() - 5;
+                        if (jsonArray.length() > 5){
+                            m = jsonArray.length() - 5;
+                        }else {
+                            m = 0;
+                        }
+
                         for (int i = m; i < jsonArray.length(); i++) {
                             jsonData = jsonArray.getJSONObject(i);
                             String id_respon = jsonData.getString("id_response");
@@ -242,7 +248,7 @@ public class DetailActivity extends AppCompatActivity {
                             response = jsonData.getString("response");
                             String username = jsonData.getString("username");
                             String tgl = jsonData.getString("tgl_response");
-                            list.add(new ListChatItem(username, tgl, response, id_laporan));
+                            list.add(new ListChatItem(username, tgl, response, "1"));
                         }
                     }
 

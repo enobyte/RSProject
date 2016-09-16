@@ -114,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            listCurrent.add(new ListChatItem(name, date, textChat, id_laporan));
+            listCurrent.add(new ListChatItem(name, date, textChat, "1"));
             //showList();
         }
 
@@ -204,7 +204,7 @@ public class ChatActivity extends AppCompatActivity {
                             String response = jsonData.getString("response");
                             String username = jsonData.getString("username");
                             String tgl = jsonData.getString("tgl_response");
-                            list.add(new ListChatItem(username, tgl, response, id_laporan));
+                            list.add(new ListChatItem(username, tgl, response, "1"));
                         }
                     }
 
