@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 cd = new ConnectionDetector(MainActivity.this);
                 isInternetActive = cd.isConnectingToInternet();
                 if (isInternetActive) {
+                    list = new ArrayList<>();
                     new getListAll().execute();
                 } else {
                     Toast.makeText(MainActivity.this, "Periksa Koneksi Internet Anda...!", Toast.LENGTH_LONG).show();

@@ -330,6 +330,7 @@ public class AddIssueActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.d("error", String.valueOf(e));
             }
             return null;
         }
@@ -344,6 +345,8 @@ public class AddIssueActivity extends AppCompatActivity {
             if (message.equalsIgnoreCase("Data berhasil disimpan")) {
                 startActivity(new Intent(AddIssueActivity.this, MainActivity.class));
                 finish();
+            }else {
+                Toast.makeText(AddIssueActivity.this, "Gagal mengirim..!", Toast.LENGTH_SHORT).show();
             }
         }
     }
