@@ -109,7 +109,7 @@ public class DetailActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         tb = (Toolbar) findViewById(R.id.toolbar);
         pr = (ProgressBar) findViewById(R.id.progress_image);
-        img = (ImageView) findViewById(R.id.img_detail_news);
+        //img = (ImageView) findViewById(R.id.img_detail_news);
         date_detail = (TextView) findViewById(R.id.date_detail);
         description_detail = (TextView) findViewById(R.id.description);
         detail_judul = (TextView) findViewById(R.id.detail_judul);
