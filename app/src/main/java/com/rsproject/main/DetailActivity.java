@@ -23,13 +23,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.rsproject.R;
+import com.rsproject.adapter.ImageViewDetailAdapter;
 import com.rsproject.adapter.RoomChatAdapter;
 import com.rsproject.encapsule.ListChatItem;
+import com.rsproject.encapsule.ListImageDetailArrays;
 import com.rsproject.utils.ConnectionDetector;
 import com.rsproject.utils.ConnectionManager;
 
@@ -48,20 +46,24 @@ public class DetailActivity extends AppCompatActivity {
     private Toolbar tb;
     private SharedPreferences session, sessionLogin;
     private ImageView img;
-    private String urlImage, username, date, description, position, position2, judul, name, id_laporan;
+    private String username, date, description, position, position2, judul, name, id_laporan;
+    private List<String> urlImage;
     private ProgressBar pr;
     private TextView date_detail, description_detail, detail_judul;
     private ArrayList<String> listFab;
     private ProgressDialog _progressDialog;
     private boolean isTaskRunning = false;
     private List<ListChatItem> list = new ArrayList<>();
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, recycleImage;
     private RoomChatAdapter adapter;
     private JSONObject jsonData;
     private Boolean isInternetActive = false;
     private ConnectionDetector cd;
     private CoordinatorLayout coordinatorLayout;
     private AppBarLayout appBarLayout;
+    private List<ListImageDetailArrays> listImage = new ArrayList<>();
+    private ImageViewDetailAdapter imageAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,12 +72,12 @@ public class DetailActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         date = getIntent().getStringExtra("date");
         description = getIntent().getStringExtra("description");
-        urlImage = getIntent().getStringExtra("urlimage");
+        urlImage = getIntent().getStringArrayListExtra("urlimage");
         position = getIntent().getStringExtra("position");
         position2 = getIntent().getStringExtra("pos2");
         judul = getIntent().getStringExtra("title");
         id_laporan = getIntent().getStringExtra("id_laporan");
-        if (position == null && position2 != null){
+        if (position == null && position2 != null) {
             position = position2;
         }
         initView();
@@ -86,9 +88,13 @@ public class DetailActivity extends AppCompatActivity {
                 i.putExtra("pos", position);
                 i.putExtra("fab", listFab);
                 i.putExtra("username", username);
-                i.putExtra("date",date);
-                i.putExtra("urlimage",urlImage);
-                i.putExtra("description",description);
+                i.putExtra("date", date);
+
+                if (urlImage.size() != 0) {
+                    i.putExtra("urlimage", urlImage.get(0));
+                }
+
+                i.putExtra("description", description);
                 i.putExtra("title", judul);
                 i.putExtra("id_laporan", id_laporan);
                 startActivity(i);
@@ -111,6 +117,7 @@ public class DetailActivity extends AppCompatActivity {
         session = getSharedPreferences("active", Context.MODE_PRIVATE);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cordinator);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        recycleImage = (RecyclerView) findViewById(R.id.imagerecycle);
         Set<String> fabActive = session.getStringSet("active", null);
         sessionLogin = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         name = sessionLogin.getString("nama", null);
@@ -143,6 +150,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void ShowData() {
+        urlImage = new ArrayList<>();
+
         if (date != null) {
             date_detail.setText(date);
         }
@@ -151,33 +160,31 @@ public class DetailActivity extends AppCompatActivity {
             description_detail.setText(description);
         }
 
-        if (detail_judul != null){
+        if (detail_judul != null) {
             detail_judul.setText(judul);
         }
 
-        if (urlImage != null) {
-            Glide.with(DetailActivity.this)
-                    .load(urlImage)
-                    /*.thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)*/
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            img.setImageResource(R.drawable.no_image);
-                            return false;
-                        }
+        /*if (urlImage.size() > 0) {
+            for (String url : urlImage) {
+                listImage.add(new ListImageDetailArrays(url));
+            }
+            LinearLayoutManager layoutParams = new LinearLayoutManager(DetailActivity.this,
+                    LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(layoutParams);
+            imageAdapter = new ImageViewDetailAdapter(listImage, DetailActivity.this);
+            recyclerView.setAdapter(adapter);
+        }*/
 
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            pr.setVisibility(View.GONE);
-                            return false;
-                        }
-                    })
-                    .into(img);
-        }
+        listImage.add(new ListImageDetailArrays("http://www.obatasmaanak.com/wp-content/uploads/2016/07/paru-paru-basah-untuk-anak2.jpg"));
+        listImage.add(new ListImageDetailArrays("http://1.bp.blogspot.com/-6b1VRd_bJMM/UT-mj7nx_eI/AAAAAAAAA8o/3NVySW20wnA/s200/images.jpg"));
+        LinearLayoutManager layoutParams = new LinearLayoutManager(DetailActivity.this,
+                LinearLayoutManager.HORIZONTAL, false);
+        recycleImage.setLayoutManager(layoutParams);
+        imageAdapter = new ImageViewDetailAdapter(listImage, DetailActivity.this);
+        recycleImage.setAdapter(imageAdapter);
 
     }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -235,9 +242,9 @@ public class DetailActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObj.getJSONArray("data");
                     int m = 0;
                     if (jsonArray.length() > 0) {
-                        if (jsonArray.length() > 5){
+                        if (jsonArray.length() > 5) {
                             m = jsonArray.length() - 5;
-                        }else {
+                        } else {
                             m = 0;
                         }
 

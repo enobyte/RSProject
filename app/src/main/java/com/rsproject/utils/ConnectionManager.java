@@ -29,6 +29,8 @@ public class ConnectionManager {
     public static final String URL_SAVE_RESPONSE = Config.makeUrlString(Config.suffix_post_response);
     public static final String URL_GET_RESPONSE = Config.makeUrlString(Config.suffix_getresponse);
     public static final String URL_GET_CATEGORY = Config.makeUrlString(Config.suffix_get_category);
+    public static final String URL_IMAGE = Config.makeUrlString(Config.suffix_post_image);
+
 
 
     private static String executeHttpClientPost(String requestURL, HashMap<String, String> params, Context context) throws IOException {

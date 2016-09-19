@@ -16,9 +16,12 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,21 +33,35 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.rsproject.R;
+import com.rsproject.adapter.ImageViewIssueAdapter;
+import com.rsproject.encapsule.ListImageIssueArrays;
 import com.rsproject.utils.AlbumStorageDirFactory;
 import com.rsproject.utils.BaseAlbumDirFactory;
 import com.rsproject.utils.ConnectionDetector;
 import com.rsproject.utils.ConnectionManager;
 import com.rsproject.utils.GPSTracker;
+import com.rsproject.utils.MyApplication;
 import com.rsproject.utils.Utils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Eno on 8/31/2016.
@@ -56,8 +73,8 @@ public class AddIssueActivity extends AppCompatActivity {
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
     private File f;
     private String picturePath, response, user, urgensi, title, ket, latitude, longitude, imageName,
-            message, id_kategori_laporan, kategori_laporan, keterangan_kategori, id_category;
-    private ImageView img, zoom, take, close_prev, prev;
+            message, id_kategori_laporan, kategori_laporan, keterangan_kategori, id_category, id_laporan;
+    private ImageView close_prev, prev;
     private Bitmap bitmap;
     private Dialog alertDialog;
     private TextView lat, lon;
@@ -71,6 +88,10 @@ public class AddIssueActivity extends AppCompatActivity {
     private List<String> kategori = new ArrayList<String>();
     private Boolean isInternetActive = false;
     private ConnectionDetector cd;
+    private RecyclerView recyclerView;
+    private ImageViewIssueAdapter adapter;
+    private List<ListImageIssueArrays> list;
+    private List<Bitmap> listBitmap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,13 +102,13 @@ public class AddIssueActivity extends AppCompatActivity {
         level = (Spinner) findViewById(R.id.level);
         category = (Spinner) findViewById(R.id.kategori);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        img = (ImageView) findViewById(R.id.img_issue);
-        zoom = (ImageView) findViewById(R.id.zoom);
-        take = (ImageView) findViewById(R.id.take);
+        /*zoom = (ImageView) findViewById(R.id.zoom);*/
+        //take = (ImageView) findViewById(R.id.take);
         lat = (TextView) findViewById(R.id.lat);
         lon = (TextView) findViewById(R.id.lon);
         judul = (EditText) findViewById(R.id.judul);
         keterangan = (EditText) findViewById(R.id.ringkasan);
+        recyclerView = (RecyclerView) findViewById(R.id.imagerecycle);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Form Keluhan");
@@ -97,20 +118,21 @@ public class AddIssueActivity extends AppCompatActivity {
         new requestCategory().execute();
         getCordinate();
         takeImage();
+        id_laporan = idGenerator();
 
-        zoom.setOnClickListener(new View.OnClickListener() {
+        /*zoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowImage();
+                ShowImagePrev();
             }
-        });
+        });*/
 
-        take.setOnClickListener(new View.OnClickListener() {
+        /*take.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takeImage();
             }
-        });
+        });*/
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +157,6 @@ public class AddIssueActivity extends AppCompatActivity {
 
                 }
 
-
             }
         });
 
@@ -157,6 +178,10 @@ public class AddIssueActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
 
         user = sharedPreferences.getString("username", null);
+
+        list = new ArrayList<>();
+
+        listBitmap = new ArrayList<>();
 
     }
 
@@ -207,14 +232,14 @@ public class AddIssueActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             {
-                setPic();
+                setPicture();
                 galleryAddPic();
             }
         }
 
     }
 
-    private void setPic() {
+    /*private void setPic() {
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(picturePath, bmOptions);
@@ -236,6 +261,35 @@ public class AddIssueActivity extends AppCompatActivity {
         img.setVisibility(View.VISIBLE);
         zoom.setVisibility(View.VISIBLE);
         take.setImageResource(R.drawable.tk_owhite);
+    }*/
+
+    private void setPicture() {
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(picturePath, bmOptions);
+        bmOptions.inJustDecodeBounds = false;
+        final int REQUIRED_SIZE = 1024;
+        int width_tmp = bmOptions.outWidth, height_tmp = bmOptions.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE)
+                break;
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+
+        bmOptions.inSampleSize = scale;
+        bitmap = BitmapFactory.decodeFile(picturePath, bmOptions);
+
+        listBitmap.add(bitmap);
+        list.add(new ListImageIssueArrays(bitmap));
+        LinearLayoutManager layoutParams = new LinearLayoutManager(AddIssueActivity.this,
+                LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutParams);
+        adapter = new ImageViewIssueAdapter(list, AddIssueActivity.this);
+        recyclerView.setAdapter(adapter);
     }
 
     private void galleryAddPic() {
@@ -261,17 +315,7 @@ public class AddIssueActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void ShowImage() {
+    /*private void ShowImagePrev() {
         alertDialog = new Dialog(AddIssueActivity.this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         LayoutInflater inflater = getLayoutInflater();
         final View root = (View) inflater.inflate(R.layout.image_preview, null);
@@ -288,7 +332,7 @@ public class AddIssueActivity extends AppCompatActivity {
         prev.setImageBitmap(bitmap);
         prev.setVisibility(View.VISIBLE);
         alertDialog.show();
-    }
+    }*/
 
     private void getCordinate() {
         lat.setText(String.valueOf(gps.getLatitude()));
@@ -345,7 +389,8 @@ public class AddIssueActivity extends AppCompatActivity {
             if (message.equalsIgnoreCase("Data berhasil disimpan")) {
                 startActivity(new Intent(AddIssueActivity.this, MainActivity.class));
                 finish();
-            }else {
+                uploadImage(AddIssueActivity.this);
+            } else {
                 Toast.makeText(AddIssueActivity.this, "Gagal mengirim..!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -390,4 +435,118 @@ public class AddIssueActivity extends AppCompatActivity {
             category.setAdapter(catAdapter);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu2, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_take:
+                takeImage();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void uploadImage(final Context context) {
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                ConnectionManager.URL_IMAGE, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("volley", "response: " + response);
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+
+                    // check for error flag
+                    if (obj.getBoolean("error") == false) {
+                        // TableImageAdapter adapter = new TableImageAdapter(context);
+                        //adapter.updatePartial(context, "flag", 1, "id", obj.getString("id"));
+                        /*Toast.makeText(AddIssueActivity.this, "Data berhasil terkirim", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddIssueActivity.this, MainActivity.class));
+                        finish();*/
+
+                    } else {
+                        // error in fetching chat rooms
+                        //Toast.makeText(getActivity(), "" + obj.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    Log.e("volley", "json parsing error: " + e.getMessage());
+                    //Toast.makeText(getActivity(), "Json parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                Log.e("voley_error", "Volley error: " + error.getMessage() + ", code: " + networkResponse);
+                //Toast.makeText(getActivity(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                Log.d("bitmap", String.valueOf(listBitmap.size()));
+                for (Bitmap bitmap : listBitmap) {
+                    params.put("id_laporan", id_laporan);
+                    params.put("image", getStringImage(bitmap));
+                    params.put("name", imageName);
+                    Log.e("volley", "params: " + params.toString());
+                }
+
+                return params;
+            }
+        };
+
+        //Adding request to request queue
+        MyApplication.getInstance().addToRequestQueue(strReq);
+    }
+
+    public String getStringImage(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageByte = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageByte, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private String idGenerator() {
+        String userid, yy, mm, dd, hh, ss, s;
+        SharedPreferences session;
+        session = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+        String user = session.getString("username", null);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date now = new Date();
+        String strDate = sdf.format(now);
+        yy = strDate.substring(2, 4);
+        mm = strDate.substring(5, 7);
+        dd = strDate.substring(8, 10);
+        hh = strDate.substring(11, 13);
+        ss = strDate.substring(14, 16);
+        s = strDate.substring(17, 19);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(user);
+        sb.append("_");
+        sb.append(yy);
+        sb.append(mm);
+        sb.append(dd);
+        sb.append(hh);
+        sb.append(ss);
+        sb.append(s);
+        sb.toString();
+
+        return sb.toString();
+    }
+
 }

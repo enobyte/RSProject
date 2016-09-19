@@ -25,7 +25,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/img_detail_news"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -44,7 +44,12 @@
                 android:max="100"
                 android:progress="0"
                 android:progressDrawable="@drawable/custom_progress"
-                android:secondaryProgress="0" />
+                android:secondaryProgress="0" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/imagerecycle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

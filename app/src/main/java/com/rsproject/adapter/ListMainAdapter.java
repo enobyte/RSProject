@@ -40,7 +40,7 @@ public class ListMainAdapter extends RecyclerView.Adapter<ListMainAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final ListItems listItems= itemsData.get(position);
+        final ListItems listItems = itemsData.get(position);
         final ViewHolder hold = (ViewHolder) holder;
         hold.name.setText(listItems.getName());
         hold.date.setText(listItems.getDate());
@@ -48,7 +48,7 @@ public class ListMainAdapter extends RecyclerView.Adapter<ListMainAdapter.ViewHo
 
 
         Glide.with(activity)
-                .load(listItems.getUrlImage())
+                .load(listItems.getUrlImage().get(position))
                 //.load("http://4.bp.blogspot.com/-y3l8eCjS9X0/VfXF4zrZLfI/AAAAAAAAFu4/fw0XWe6yy4Q/s640/Boneka%2Bsi%2BUnyil.jpg")
                 /*.thumbnail(0.5f)
                 .crossFade()
@@ -99,7 +99,7 @@ public class ListMainAdapter extends RecyclerView.Adapter<ListMainAdapter.ViewHo
             name = (TextView) itemView.findViewById(R.id.name);
             date = (TextView) itemView.findViewById(R.id.ndate);
             description = (TextView) itemView.findViewById(R.id.desc_items);
-            img = (ImageView)itemView.findViewById(R.id.nphoto);
+            img = (ImageView) itemView.findViewById(R.id.nphoto);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress_image);
 
         }

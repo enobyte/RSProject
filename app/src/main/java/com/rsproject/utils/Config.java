@@ -20,6 +20,7 @@ public class Config {
     public static final String suffix_login = "user/login";
     public static final String suffix_save_laporan = "laporan/entry";
     public static final String suffix_get_category = "report_category";
+    public static final String suffix_post_image = "image/upload";
 
     /*
     |-----------------------------------------------------------------------------------------------

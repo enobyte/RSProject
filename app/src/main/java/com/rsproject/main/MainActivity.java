@@ -41,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private JSONObject jsonObject, jsonObj;
     private JSONArray jsonData;
     private SharedPreferences session;
-    //private ListItems items;
+    private ArrayList<String> imageUrlArray = new ArrayList();
     private Boolean isInternetActive = false;
     private ConnectionDetector cd;
+    private JSONArray imageArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "Periksa Koneksi Internet Anda...!", Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
     }
@@ -141,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
             }
-
         }
 
         @Override
@@ -159,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     jsonObject = new JSONObject(response);
                     jsonData = jsonObject.getJSONArray("laporan");
                     if (jsonData.length() > 0) {
+
                         for (int i = jsonData.length() - 1; i < jsonData.length(); i--) {
                             jsonObj = jsonData.getJSONObject(i);
                             String id_laporan = jsonObj.getString("id_laporan");
@@ -172,8 +171,10 @@ public class MainActivity extends AppCompatActivity {
                             String status_urgensi = jsonObj.getString("status_urgensi");
                             String status_laporan = jsonObj.getString("status_laporan");
                             String gambar = jsonObj.getString("gambar");
-                            list.add(new ListItems(id_laporan, username, tgl_laporan, keterangan, gambar, judul));
+                            imageUrlArray.add(gambar);
+                            list.add(new ListItems(id_laporan, username, tgl_laporan, keterangan, imageUrlArray, judul));
                         }
+
                     }
 
                 }
