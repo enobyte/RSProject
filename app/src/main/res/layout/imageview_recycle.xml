@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:id="@+id/zoomprev"
-        android:layout_margin="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="30dp"
         android:src="@drawable/ic_zoom" />
 </FrameLayout>
