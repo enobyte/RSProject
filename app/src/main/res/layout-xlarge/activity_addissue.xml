@@ -79,6 +79,65 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
+                        android:text="Nama"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/nama"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="13dp" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Umur"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/umur"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="13dp" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Jenis Kelamin"
+                        android:textSize="15sp" />
+
+                    <Spinner
+                        android:id="@+id/jk"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="10dp"
+                        android:entries="@array/spinner_jenis" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Alamat"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/alamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="13dp" />
+
+                    <com.rsproject.widget.TextViewPlus
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:text="Kategori"
                         android:textSize="@dimen/text_addissue" />
 

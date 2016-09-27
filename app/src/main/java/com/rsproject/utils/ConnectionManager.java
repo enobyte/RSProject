@@ -171,7 +171,8 @@ public class ConnectionManager {
 
     public static String requestSaveLaporan(String url, String id_category, String judul, String keterangan,
                                             String lat, String lon, String tgl, String username, String status_urgensi,
-                                            String status_laporan,String gambar, Context context) throws IOException {
+                                            String status_laporan,String gambar, String jk, String nama,
+                                            String alamat, String umur, Context context) throws IOException {
         HashMap<String, String> param = new HashMap<>();
         param.put("username", username);
         param.put("id_kategori_laporan", id_category);
@@ -183,6 +184,10 @@ public class ConnectionManager {
         param.put("status_urgensi", status_urgensi);
         param.put("status_laporan", status_laporan);
         param.put("gambar", gambar);
+        param.put("jenis_kelamin", jk);
+        param.put("nama", nama);
+        param.put("alamat", alamat);
+        param.put("umur", umur);
         return connectHttpPost(url, param, context);
     }
 

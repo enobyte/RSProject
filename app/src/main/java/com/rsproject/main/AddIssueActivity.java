@@ -68,18 +68,19 @@ import java.util.Map;
  */
 public class AddIssueActivity extends AppCompatActivity {
     private FloatingActionButton save;
-    private Spinner level, category;
+    private Spinner level, category, jeniskelamin;
     private Toolbar toolbar;
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
     private File f;
     private String picturePath, response, user, urgensi, title, ket, latitude, longitude, imageName,
-            message, id_kategori_laporan, kategori_laporan, keterangan_kategori, id_category, id_laporan;
+            message, id_kategori_laporan, kategori_laporan, keterangan_kategori, id_category, id_laporan,
+            jenis_kel, strnama, strumur, stralamat;
     private ImageView close_prev, prev;
     private Bitmap bitmap;
     private Dialog alertDialog;
     private TextView lat, lon;
     private GPSTracker gps;
-    private EditText judul, keterangan;
+    private EditText judul, keterangan, nama, umur, alamat;
     private Utils utils;
     private ProgressDialog _progressDialog;
     private boolean isTaskRunning = false;
@@ -92,6 +93,7 @@ public class AddIssueActivity extends AppCompatActivity {
     private ImageViewIssueAdapter adapter;
     private List<ListImageIssueArrays> list;
     private List<Bitmap> listBitmap;
+    private GPSTracker tracker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +103,7 @@ public class AddIssueActivity extends AppCompatActivity {
         save = (FloatingActionButton) findViewById(R.id.save);
         level = (Spinner) findViewById(R.id.level);
         category = (Spinner) findViewById(R.id.kategori);
+        jeniskelamin = (Spinner) findViewById(R.id.jk);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         /*zoom = (ImageView) findViewById(R.id.zoom);*/
         //take = (ImageView) findViewById(R.id.take);
@@ -109,6 +112,10 @@ public class AddIssueActivity extends AppCompatActivity {
         judul = (EditText) findViewById(R.id.judul);
         keterangan = (EditText) findViewById(R.id.ringkasan);
         recyclerView = (RecyclerView) findViewById(R.id.imagerecycle);
+        nama = (EditText) findViewById(R.id.nama);
+        alamat = (EditText) findViewById(R.id.alamat);
+        umur = (EditText) findViewById(R.id.umur);
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Form Keluhan");
@@ -138,8 +145,23 @@ public class AddIssueActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (level.getSelectedItemPosition() == 0) {
-                    Toast.makeText(AddIssueActivity.this, "Select One", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIssueActivity.this, "Pilih Level", Toast.LENGTH_SHORT).show();
+                } else if (nama.getText().toString().equalsIgnoreCase("")
+                        || nama.getText().toString().trim().length() < 1) {
+                    Toast.makeText(AddIssueActivity.this, "Nama harus diisi", Toast.LENGTH_SHORT).show();
+                } else if (umur.getText().toString().equalsIgnoreCase("")
+                        || umur.getText().toString().trim().length() < 1) {
+                    Toast.makeText(AddIssueActivity.this, "Umur harus diisi", Toast.LENGTH_SHORT).show();
+                } else if (jeniskelamin.getSelectedItemPosition() == 0) {
+                    Toast.makeText(AddIssueActivity.this, "Pilih Jenis Kelamin", Toast.LENGTH_SHORT).show();
+                } else if (alamat.getText().toString().equalsIgnoreCase("")
+                        || alamat.getText().toString().trim().length() < 1) {
+                    Toast.makeText(AddIssueActivity.this, "Alamat harus diisi", Toast.LENGTH_SHORT).show();
                 } else {
+                    strnama = nama.getText().toString();
+                    stralamat = alamat.getText().toString();
+                    strumur = umur.getText().toString();
+                    jenis_kel = jeniskelamin.getSelectedItem().toString();
                     urgensi = level.getSelectedItem().toString();
                     title = judul.getText().toString();
                     ket = keterangan.getText().toString();
@@ -182,6 +204,11 @@ public class AddIssueActivity extends AppCompatActivity {
         list = new ArrayList<>();
 
         listBitmap = new ArrayList<>();
+
+        tracker = new GPSTracker(this);
+        if (!tracker.getIsGPSTrackingEnabled()) {
+            tracker.showSettingsAlert();
+        }
 
     }
 
@@ -366,7 +393,7 @@ public class AddIssueActivity extends AppCompatActivity {
                 String url = ConnectionManager.URL_SAVE_LAPORAN;
                 response = ConnectionManager.requestSaveLaporan(
                         url, id_category, title, ket, latitude, longitude, utils.getCurrentDateandTime(),
-                        user, urgensi, "proses", imageName, AddIssueActivity.this);
+                        user, urgensi, "proses", imageName, jenis_kel, strnama, stralamat, strumur, AddIssueActivity.this);
                 if (response != null) {
                     jsonObj = new JSONObject(response);
                     message = jsonObj.getString("message");

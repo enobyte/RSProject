@@ -21,6 +21,7 @@ import com.rsproject.adapter.ListMainAdapter;
 import com.rsproject.encapsule.ListItems;
 import com.rsproject.utils.ConnectionDetector;
 import com.rsproject.utils.ConnectionManager;
+import com.rsproject.utils.GPSTracker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isInternetActive = false;
     private ConnectionDetector cd;
     private JSONArray imageArray;
+    private GPSTracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        tracker = new GPSTracker(this);
+        if (!tracker.getIsGPSTrackingEnabled()){
+            tracker.showSettingsAlert();
+        }
     }
 
     private void ShowData() {

@@ -86,7 +86,9 @@ public class ChatActivity extends AppCompatActivity {
         sendChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new requestPostList().execute();
+                if (inputText.getText().toString().trim().length() > 0){
+                    new requestPostList().execute();
+                }
                 //showList();
             }
         });
